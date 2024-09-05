@@ -10,30 +10,27 @@ class StackTest < Minitest::Test
   end
 
   def test_push_element
-    @stack.push(1)
-    assert_includes @stack.to_a, 1
+    @stack.push! "php"
+    assert { @stack.instance_variable_get(:@elements).include?("php") }
   end
-
   def test_pop_element
-    @stack.push(2)
-    popped = @stack.pop
-    assert_equal 2, popped
-    assert_empty @stack.to_a
+    @stack.push! "java"
+    element = @stack.pop!
+    assert { element == "java" }
+    assert { @stack.empty? }
   end
 
   def test_clear_stack
-    @stack.push(3)
-    @stack.push(4)
-    @stack.clear
-    assert_empty @stack.to_a
+    @stack.push! 1
+    @stack.push! 2
+    @stack.clear!
+    assert { @stack.empty? }
   end
 
   def test_empty_stack
-    assert @stack.empty?
-    @stack.push(5)
-    refute @stack.empty?
-    @stack.pop
-    assert @stack.empty?
+    assert { @stack.empty? }
+    @stack.push! 1
+    assert { !@stack.empty? }
   end
 end
 
